@@ -2,6 +2,7 @@ import type { AppProps } from 'next/app'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
 import '../../styles/normalize.css'
+import '../../styles/common.css'
 
 const queryClient = new QueryClient()
 
