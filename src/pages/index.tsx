@@ -7,11 +7,16 @@ import {
   selectSigunguList,
 } from '@controller/petController'
 import { IPetParams } from '@interface/IPet'
+import { dateToString, prevMonthYear } from '@shared/utils'
+import DatePicker from 'react-datepicker'
+import { ko } from 'date-fns/esm/locale'
+import CusDatePicker from '@components/common/CusDatePicker'
 
 export default function Home() {
   const [sido, setSido] = useState('')
   const [sidoList, setSidoList] = useState([])
   const [sigungu, setSigungu] = useState('')
+
   const [sigunguList, setSigunguList] = useState([])
   const [defUpKindList] = useState([
     { value: '417000', label: '개' },
@@ -21,6 +26,9 @@ export default function Home() {
   const [upKind, setUpKind] = useState('417000')
   const [kind, setKind] = useState('')
   const [kindList, setKindList] = useState([])
+  const [startDate, setStartDate] = useState<Date>(prevMonthYear(3))
+  const [endDate, setEndDate] = useState<Date>(new Date())
+
   useEffect(() => {
     getSidoList()
     getKindList(upKind)
@@ -55,8 +63,8 @@ export default function Home() {
 
   const getPetList = async () => {
     const params: IPetParams = {
-      bgnde: '20221101',
-      endde: '20221107',
+      bgnde: dateToString(startDate),
+      endde: dateToString(endDate),
       upKind,
       kind,
       uprCd: sido,
@@ -65,8 +73,9 @@ export default function Home() {
       limit: '20',
       state: 'notice',
     }
-    const list = await selectPetList(params)
-    console.log(list.data)
+    console.log('params', params)
+    // const list = await selectPetList(params)
+    // console.log(list.data)
   }
 
   const onClick = () => {
@@ -105,15 +114,26 @@ export default function Home() {
               )
             })}
           </select>
-          <select>
-            {sigunguList.map(({ orgdownNm, uprCd }, i) => {
+          <select onChange={(e) => setSigungu(e.target.value)}>
+            {sigunguList.map(({ orgdownNm, orgCd }, i) => {
               return (
-                <option key={i} value={uprCd}>
+                <option key={i} value={orgCd}>
                   {orgdownNm}
                 </option>
               )
             })}
           </select>
+          <CusDatePicker
+            value={startDate}
+            max={endDate}
+            onChange={(date) => date && setStartDate(date)}
+          />
+          <CusDatePicker
+            value={endDate}
+            min={startDate}
+            max={new Date()}
+            onChange={(date) => date && setEndDate(date)}
+          />
           <button onClick={onClick}>조회</button>
           <h1>main</h1>
         </>
