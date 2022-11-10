@@ -1,5 +1,5 @@
-import DatePicker, { ReactDatePickerProps } from 'react-datepicker'
-import { ko } from 'date-fns/esm/locale'
+import DatePicker from 'react-datepicker'
+import ko from 'date-fns/locale/ko'
 import 'react-datepicker/dist/react-datepicker.css'
 
 interface ICusDateProps {

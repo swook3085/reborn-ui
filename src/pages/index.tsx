@@ -8,8 +8,6 @@ import {
 } from '@controller/petController'
 import { IPetParams } from '@interface/IPet'
 import { dateToString, prevMonthYear } from '@shared/utils'
-import DatePicker from 'react-datepicker'
-import { ko } from 'date-fns/esm/locale'
 import CusDatePicker from '@components/common/CusDatePicker'
 
 export default function Home() {
