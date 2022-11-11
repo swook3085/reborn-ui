@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import ResponsiveLayout from '@components/layout/ResponsiveLayout'
 import {
   selectKindList,
   selectPetList,
@@ -83,59 +82,55 @@ export default function Home() {
 
   return (
     <>
-      <ResponsiveLayout>
-        <>
-          <select onChange={(e) => getKindList(e.target.value)}>
-            {defUpKindList.map(({ label, value }, i) => {
-              return (
-                <option key={i} value={value}>
-                  {label}
-                </option>
-              )
-            })}
-          </select>
-          <select onChange={(e) => setKind(e.target.value)}>
-            {kindList.map(({ knm, kindCd }, i) => {
-              return (
-                <option key={i} value={kindCd}>
-                  {knm}
-                </option>
-              )
-            })}
-          </select>
-          <select onChange={(e) => getSigunguList(e.target.value)}>
-            {sidoList.map(({ orgdownNm, orgCd }, i) => {
-              return (
-                <option key={i} value={orgCd}>
-                  {orgdownNm}
-                </option>
-              )
-            })}
-          </select>
-          <select onChange={(e) => setSigungu(e.target.value)}>
-            {sigunguList.map(({ orgdownNm, orgCd }, i) => {
-              return (
-                <option key={i} value={orgCd}>
-                  {orgdownNm}
-                </option>
-              )
-            })}
-          </select>
-          <CusDatePicker
-            value={startDate}
-            max={endDate}
-            onChange={(date) => date && setStartDate(date)}
-          />
-          <CusDatePicker
-            value={endDate}
-            min={startDate}
-            max={new Date()}
-            onChange={(date) => date && setEndDate(date)}
-          />
-          <button onClick={onClick}>조회</button>
-          <h1>main</h1>
-        </>
-      </ResponsiveLayout>
+      <select onChange={(e) => getKindList(e.target.value)}>
+        {defUpKindList.map(({ label, value }, i) => {
+          return (
+            <option key={i} value={value}>
+              {label}
+            </option>
+          )
+        })}
+      </select>
+      <select onChange={(e) => setKind(e.target.value)}>
+        {kindList.map(({ knm, kindCd }, i) => {
+          return (
+            <option key={i} value={kindCd}>
+              {knm}
+            </option>
+          )
+        })}
+      </select>
+      <select onChange={(e) => getSigunguList(e.target.value)}>
+        {sidoList.map(({ orgdownNm, orgCd }, i) => {
+          return (
+            <option key={i} value={orgCd}>
+              {orgdownNm}
+            </option>
+          )
+        })}
+      </select>
+      <select onChange={(e) => setSigungu(e.target.value)}>
+        {sigunguList.map(({ orgdownNm, orgCd }, i) => {
+          return (
+            <option key={i} value={orgCd}>
+              {orgdownNm}
+            </option>
+          )
+        })}
+      </select>
+      <CusDatePicker
+        value={startDate}
+        max={endDate}
+        onChange={(date) => date && setStartDate(date)}
+      />
+      <CusDatePicker
+        value={endDate}
+        min={startDate}
+        max={new Date()}
+        onChange={(date) => date && setEndDate(date)}
+      />
+      <button onClick={onClick}>조회</button>
+      <h1>main</h1>
     </>
   )
 }
