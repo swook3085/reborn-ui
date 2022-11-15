@@ -82,7 +82,7 @@ export default function Home() {
 
   return (
     <>
-      <select onChange={(e) => getKindList(e.target.value)}>
+      {/* <select onChange={(e) => getKindList(e.target.value)}>
         {defUpKindList.map(({ label, value }, i) => {
           return (
             <option key={i} value={value}>
@@ -101,6 +101,7 @@ export default function Home() {
         })}
       </select>
       <select onChange={(e) => getSigunguList(e.target.value)}>
+        <option value={''}>전국</option>
         {sidoList.map(({ orgdownNm, orgCd }, i) => {
           return (
             <option key={i} value={orgCd}>
@@ -130,7 +131,7 @@ export default function Home() {
         onChange={(date) => date && setEndDate(date)}
       />
       <button onClick={onClick}>조회</button>
-      <h1>main</h1>
+      <h1>main</h1> */}
     </>
   )
 }

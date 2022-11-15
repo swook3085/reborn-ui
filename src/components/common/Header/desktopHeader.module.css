@@ -2,5 +2,5 @@
   height: 80px;
   width: 100%;
   display: block;
-  background: black;
+  border-bottom: 1px solid red;
 }

@@ -1,7 +1,10 @@
-import styles from './header.module.css'
+import useDevice from '@shared/hooks/useDevice'
+import DesktopHeader from './DesktopHeader'
+import MobileHeader from './MobieHeader'
 
 const Header = () => {
-  return <header className={styles.header}></header>
+  const { isMobile } = useDevice()
+  return isMobile ? <MobileHeader /> : <DesktopHeader />
 }
 
 export default Header

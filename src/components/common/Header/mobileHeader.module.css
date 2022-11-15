@@ -1,0 +1,6 @@
+.mobileHeader {
+  height: 80px;
+  width: 100%;
+  display: block;
+  border-bottom: 1px solid #000;
+}
