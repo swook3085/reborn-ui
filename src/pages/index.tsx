@@ -8,6 +8,8 @@ import {
 import { IPetParams } from '@interface/IPet'
 import { dateToString, prevMonthYear } from '@shared/utils'
 import CusDatePicker from '@components/common/CusDatePicker'
+import Portal from '@components/common/Portal'
+import BottomModal from '@components/utils/BottomModal'
 
 export default function Home() {
   const [sido, setSido] = useState('')
@@ -82,6 +84,9 @@ export default function Home() {
 
   return (
     <>
+      <BottomModal>
+        <div style={{ height: 500 }}></div>
+      </BottomModal>
       {/* <select onChange={(e) => getKindList(e.target.value)}>
         {defUpKindList.map(({ label, value }, i) => {
           return (
@@ -132,6 +137,14 @@ export default function Home() {
       />
       <button onClick={onClick}>조회</button>
       <h1>main</h1> */}
+      {/* <div
+        style={{
+          height: 500,
+          width: '100%',
+          backgroundColor: 'red',
+          position: 'fixed',
+        }}
+      ></div> */}
     </>
   )
 }

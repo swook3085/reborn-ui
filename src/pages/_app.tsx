@@ -1,15 +1,16 @@
 import type { AppProps } from 'next/app'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
+import Header from '@components/layout/Header'
+import Layout from '@components/layout/Layout'
+
 import '../../styles/normalize.css'
 import '../../styles/common.css'
 import '../../styles/layout.css'
-import Header from '@components/common/Header'
-import Layout from '@components/layout/Layout'
 
 const queryClient = new QueryClient()
 
-function App({ Component, pageProps }: AppProps) {
+const App = ({ Component, pageProps }: AppProps) => {
   return (
     <>
       <Header />
