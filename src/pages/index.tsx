@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import ResponsiveLayout from '@components/layout/ResponsiveLayout'
 import {
   selectKindList,
   selectPetList,
@@ -7,11 +6,16 @@ import {
   selectSigunguList,
 } from '@controller/petController'
 import { IPetParams } from '@interface/IPet'
+import { dateToString, prevMonthYear } from '@shared/utils'
+import CusDatePicker from '@components/common/CusDatePicker'
+import Portal from '@components/common/Portal'
+import BottomModal from '@components/utils/BottomModal'
 
 export default function Home() {
   const [sido, setSido] = useState('')
   const [sidoList, setSidoList] = useState([])
   const [sigungu, setSigungu] = useState('')
+
   const [sigunguList, setSigunguList] = useState([])
   const [defUpKindList] = useState([
     { value: '417000', label: '개' },
@@ -21,6 +25,9 @@ export default function Home() {
   const [upKind, setUpKind] = useState('417000')
   const [kind, setKind] = useState('')
   const [kindList, setKindList] = useState([])
+  const [startDate, setStartDate] = useState<Date>(prevMonthYear(3))
+  const [endDate, setEndDate] = useState<Date>(new Date())
+
   useEffect(() => {
     getSidoList()
     getKindList(upKind)
@@ -55,8 +62,8 @@ export default function Home() {
 
   const getPetList = async () => {
     const params: IPetParams = {
-      bgnde: '20221101',
-      endde: '20221107',
+      bgnde: dateToString(startDate),
+      endde: dateToString(endDate),
       upKind,
       kind,
       uprCd: sido,
@@ -65,8 +72,9 @@ export default function Home() {
       limit: '20',
       state: 'notice',
     }
-    const list = await selectPetList(params)
-    console.log(list.data)
+    console.log('params', params)
+    // const list = await selectPetList(params)
+    // console.log(list.data)
   }
 
   const onClick = () => {
@@ -76,48 +84,67 @@ export default function Home() {
 
   return (
     <>
-      <ResponsiveLayout>
-        <>
-          <select onChange={(e) => getKindList(e.target.value)}>
-            {defUpKindList.map(({ label, value }, i) => {
-              return (
-                <option key={i} value={value}>
-                  {label}
-                </option>
-              )
-            })}
-          </select>
-          <select onChange={(e) => setKind(e.target.value)}>
-            {kindList.map(({ knm, kindCd }, i) => {
-              return (
-                <option key={i} value={kindCd}>
-                  {knm}
-                </option>
-              )
-            })}
-          </select>
-          <select onChange={(e) => getSigunguList(e.target.value)}>
-            {sidoList.map(({ orgdownNm, orgCd }, i) => {
-              return (
-                <option key={i} value={orgCd}>
-                  {orgdownNm}
-                </option>
-              )
-            })}
-          </select>
-          <select>
-            {sigunguList.map(({ orgdownNm, uprCd }, i) => {
-              return (
-                <option key={i} value={uprCd}>
-                  {orgdownNm}
-                </option>
-              )
-            })}
-          </select>
-          <button onClick={onClick}>조회</button>
-          <h1>main</h1>
-        </>
-      </ResponsiveLayout>
+      <BottomModal>
+        <div style={{ height: 500 }}></div>
+      </BottomModal>
+      {/* <select onChange={(e) => getKindList(e.target.value)}>
+        {defUpKindList.map(({ label, value }, i) => {
+          return (
+            <option key={i} value={value}>
+              {label}
+            </option>
+          )
+        })}
+      </select>
+      <select onChange={(e) => setKind(e.target.value)}>
+        {kindList.map(({ knm, kindCd }, i) => {
+          return (
+            <option key={i} value={kindCd}>
+              {knm}
+            </option>
+          )
+        })}
+      </select>
+      <select onChange={(e) => getSigunguList(e.target.value)}>
+        <option value={''}>전국</option>
+        {sidoList.map(({ orgdownNm, orgCd }, i) => {
+          return (
+            <option key={i} value={orgCd}>
+              {orgdownNm}
+            </option>
+          )
+        })}
+      </select>
+      <select onChange={(e) => setSigungu(e.target.value)}>
+        {sigunguList.map(({ orgdownNm, orgCd }, i) => {
+          return (
+            <option key={i} value={orgCd}>
+              {orgdownNm}
+            </option>
+          )
+        })}
+      </select>
+      <CusDatePicker
+        value={startDate}
+        max={endDate}
+        onChange={(date) => date && setStartDate(date)}
+      />
+      <CusDatePicker
+        value={endDate}
+        min={startDate}
+        max={new Date()}
+        onChange={(date) => date && setEndDate(date)}
+      />
+      <button onClick={onClick}>조회</button>
+      <h1>main</h1> */}
+      {/* <div
+        style={{
+          height: 500,
+          width: '100%',
+          backgroundColor: 'red',
+          position: 'fixed',
+        }}
+      ></div> */}
     </>
   )
 }
