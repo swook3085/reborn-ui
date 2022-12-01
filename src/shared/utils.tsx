@@ -1,3 +1,5 @@
+import { API_KEY, API_URL } from './constants'
+
 export const getSearchURL = (params: any, url: string) => {
   return [url, new URLSearchParams(params)].join('&')
 }
@@ -7,10 +9,7 @@ export const getServiceURL = (type: string, upParams: object) => {
     ...upParams,
     _type: 'json',
   }
-  return getSearchURL(
-    params,
-    `${process.env.API_URL}${type}?serviceKey=${process.env.API_KEY}`,
-  )
+  return getSearchURL(params, `${API_URL}${type}?serviceKey=${API_KEY}`)
 }
 
 export const dateToString = (date: Date) => {
