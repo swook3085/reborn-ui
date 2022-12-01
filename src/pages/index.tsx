@@ -47,10 +47,8 @@ export default function Home() {
   }
 
   const getSidoList = async () => {
-    // const { data } = await selectSidoList({ numOfRows: '20' })
-    const url = getServiceURL('sido', { numOfRows: '20' })
-    const response = await http.get(url)
-    console.log(response)
+    const data = await selectSidoList({ numOfRows: '20' })
+    console.log(data)
     // try {
     //   const list = response.data.response.body.items.item || []
     //   res.status(200).json(list)
