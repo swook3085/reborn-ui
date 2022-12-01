@@ -9,17 +9,8 @@ const nextConfig = {
     forceSwcTransforms: true,
   },
   env: {
-    API_KEY:
-      'jxdNXHd7MviV0OG96kcvMLDsmrrUH4VJcJ5gizCALgi1jMmyz5tA4sJ3PCByGqHd381IPz3UCtTCnGuX0dOZgQ%3D%3D',
-    API_URL: 'https://apis.data.go.kr/1543061/abandonmentPublicSrvc/',
-  },
-  async rewrites() {
-    return [
-      {
-        source: '/api/:type/:params*',
-        destination: `${process.env.API_URL}:type?_type=json&serviceKey=${process.env.API_KEY}&:params`,
-      },
-    ]
+    API_KEY: process.env.API_KEY,
+    API_URL: process.env.API_URL,
   },
   webpack(config, { webpack }) {
     config.resolve = {
