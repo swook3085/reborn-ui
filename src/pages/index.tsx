@@ -85,7 +85,7 @@ export default function Home() {
   return (
     <>
       <BottomModal>
-        <div style={{ height: 500 }}></div>
+        <div style={{ height: 500 }}>asdfasdfad</div>
       </BottomModal>
       {/* <select onChange={(e) => getKindList(e.target.value)}>
         {defUpKindList.map(({ label, value }, i) => {
