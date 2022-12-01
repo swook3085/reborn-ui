@@ -8,10 +8,13 @@ import {
 import { IPetParams } from '@interface/IPet'
 import { dateToString, prevMonthYear } from '@shared/utils'
 import CusDatePicker from '@components/common/CusDatePicker'
-import Portal from '@components/common/Portal'
-import BottomModal from '@components/utils/BottomModal'
+import Sheet from 'react-modal-sheet'
+
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded'
+import http from '@modules/lib/customAxios'
 
 export default function Home() {
+  const [open, setOpen] = useState(false)
   const [sido, setSido] = useState('')
   const [sidoList, setSidoList] = useState([])
   const [sigungu, setSigungu] = useState('')
@@ -30,7 +33,7 @@ export default function Home() {
 
   useEffect(() => {
     getSidoList()
-    getKindList(upKind)
+    // getKindList(upKind)
   }, [])
 
   const getSigunguList = async (uprCd: string) => {
@@ -44,9 +47,20 @@ export default function Home() {
   }
 
   const getSidoList = async () => {
-    const { data } = await selectSidoList({ numOfRows: '20' })
-    setSidoList(data)
-    getSigunguList(data[0].orgCd)
+    // const { data } = await selectSidoList({ numOfRows: '20' })
+
+    // const url = getServiceURL('sido', req.query)
+    const response = await http.get('/api/sido?numOfRows=20')
+    console.log(response)
+    // try {
+    //   const list = response.data.response.body.items.item || []
+    //   res.status(200).json(list)
+    // } catch (error) {
+    //   res.status(500).json([])
+    // }
+
+    // setSidoList(data)
+    // getSigunguList(data[0].orgCd)
   }
 
   const getKindList = async (upKindCd: string) => {
@@ -81,12 +95,24 @@ export default function Home() {
     console.log('조회')
     getPetList()
   }
-
   return (
     <>
-      <BottomModal>
-        <div style={{ height: 500 }}>asdfasdfad</div>
-      </BottomModal>
+      <button onClick={() => setOpen(true)}>열기</button>
+      <Sheet
+        isOpen={open}
+        rootId='__next'
+        onClose={() => setOpen(false)}
+        // detent='content-height'
+      >
+        <Sheet.Container>
+          <Sheet.Header />
+          <button onClick={() => setOpen(false)}>
+            <CloseRoundedIcon fontSize='large' />
+          </button>
+          <Sheet.Content></Sheet.Content>
+        </Sheet.Container>
+        <Sheet.Backdrop />
+      </Sheet>
       {/* <select onChange={(e) => getKindList(e.target.value)}>
         {defUpKindList.map(({ label, value }, i) => {
           return (

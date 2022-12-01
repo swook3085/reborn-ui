@@ -3,10 +3,18 @@
 const path = require('path')
 
 const nextConfig = {
-  reactStrictMode: true,
+  reactStrictMode: false,
   swcMinify: true,
   experimental: {
     forceSwcTransforms: true,
+  },
+  async rewrites() {
+    return [
+      {
+        source: '/api/:type/:params*',
+        destination: `${process.env.API_URL}:type?_type=json&serviceKey=${process.env.API_KEY}&:params`,
+      },
+    ]
   },
   webpack(config, { webpack }) {
     config.resolve = {
