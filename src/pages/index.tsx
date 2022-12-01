@@ -6,7 +6,7 @@ import {
   selectSigunguList,
 } from '@controller/petController'
 import { IPetParams } from '@interface/IPet'
-import { dateToString, prevMonthYear } from '@shared/utils'
+import { dateToString, getServiceURL, prevMonthYear } from '@shared/utils'
 import CusDatePicker from '@components/common/CusDatePicker'
 import Sheet from 'react-modal-sheet'
 
@@ -49,8 +49,8 @@ export default function Home() {
   const getSidoList = async () => {
     // const { data } = await selectSidoList({ numOfRows: '20' })
 
-    // const url = getServiceURL('sido', req.query)
-    const response = await http.get('/api/sido?numOfRows=20')
+    const url = getServiceURL('sido', { numOfRows: '20' })
+    const response = await http.get(url)
     console.log(response)
     // try {
     //   const list = response.data.response.body.items.item || []
