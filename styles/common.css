@@ -48,3 +48,7 @@
 .react-datepicker__header {
   background-color: #fff;
 }
+
+.ant-picker-input input {
+  cursor: pointer;
+}

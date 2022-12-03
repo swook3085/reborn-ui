@@ -104,6 +104,7 @@ export default function Home() {
     console.log('조회')
     getPetList()
   }
+
   return (
     <>
       <Button type='primary'></Button>
@@ -150,12 +151,16 @@ export default function Home() {
         disabledDate={(d) => !d || d.isAfter(endDate)}
         allowClear={false}
         showToday={false}
+        style={{ cursor: 'pointer' }}
+        inputReadOnly
       />
       <DatePicker
         defaultValue={dayjs(endDate, 'YYYY-MM-DD')}
         disabledDate={(d) => !d || d.isAfter(endDate) || d.isBefore(startDate)}
         allowClear={false}
         showToday={false}
+        style={{ cursor: 'pointer' }}
+        inputReadOnly
       />
       {/* <CusDatePicker
         value={startDate}
