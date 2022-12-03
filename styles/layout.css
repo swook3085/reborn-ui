@@ -1,17 +1,19 @@
 @media (max-width: 767px) {
   .header {
-    height: 60px;
-    width: 100%;
+    flex: 1;
+    height: 100%;
     display: flex;
     border-bottom: 1px solid #000;
+    justify-content: space-between;
   }
   .logo-wrap {
-    flex: 1;
+    display: flex;
+    align-items: center;
   }
 
   .logo-wrap .logo {
     width: 80px;
-    height: 100%;
+    height: 40px;
     background-color: red;
   }
 

@@ -6,12 +6,12 @@ import {
   selectSigunguList,
 } from '@controller/petController'
 import { IPetParams } from '@interface/IPet'
-import { dateToString, getServiceURL, prevMonthYear } from '@shared/utils'
-import CusDatePicker from '@components/common/CusDatePicker'
-import Sheet from 'react-modal-sheet'
-
-import CloseRoundedIcon from '@mui/icons-material/CloseRounded'
-import http from '@modules/lib/customAxios'
+import { dateFormatDash, prevMonthYearStr } from '@shared/utils'
+// import CusDatePicker from '@components/common/CusDatePicker'
+import BottomModal from '@components/utils/BottomModal'
+import { Button, Select, DatePicker } from 'antd'
+import dayjs from 'dayjs'
+import 'dayjs/locale/ko'
 
 export default function Home() {
   const [open, setOpen] = useState(false)
@@ -21,19 +21,23 @@ export default function Home() {
 
   const [sigunguList, setSigunguList] = useState([])
   const [defUpKindList] = useState([
+    { value: '', label: '전체' },
     { value: '417000', label: '개' },
     { value: '422400', label: '고양이' },
     { value: '429900', label: '기타' },
   ])
   const [upKind, setUpKind] = useState('417000')
   const [kind, setKind] = useState('')
-  const [kindList, setKindList] = useState([])
-  const [startDate, setStartDate] = useState<Date>(prevMonthYear(3))
-  const [endDate, setEndDate] = useState<Date>(new Date())
+  const [kindList, setKindList] = useState<{ value: string; label: string }[]>(
+    [],
+  )
+  const [loading, setLoading] = useState<boolean>(false)
+  const [startDate, setStartDate] = useState<string>(prevMonthYearStr(3))
+  const [endDate, setEndDate] = useState<string>(dateFormatDash(new Date()))
 
   useEffect(() => {
     getSidoList()
-    // getKindList(upKind)
+    getKindList(upKind)
   }, [])
 
   const getSigunguList = async (uprCd: string) => {
@@ -41,9 +45,9 @@ export default function Home() {
       uprCd,
     }
     setSido(uprCd)
-    const list = await selectSigunguList(params)
-    console.log(list.data)
-    setSigunguList(list.data)
+    const data = await selectSigunguList(params)
+    console.log(data)
+    setSigunguList(data)
   }
 
   const getSidoList = async () => {
@@ -56,25 +60,33 @@ export default function Home() {
     //   res.status(500).json([])
     // }
 
-    // setSidoList(data)
-    // getSigunguList(data[0].orgCd)
+    setSidoList(data)
+    getSigunguList(data[0].orgCd)
   }
 
   const getKindList = async (upKindCd: string) => {
     const params = {
       upKindCd,
     }
+    setLoading(true)
     setUpKind(upKindCd)
-    const { data } = await selectKindList(params)
+    const data = await selectKindList(params)
     console.log(data)
-    setKindList(data)
+    const kindSelectData = data.map(({ knm, kindCd }) => {
+      return {
+        value: kindCd,
+        label: knm,
+      }
+    })
+    setKindList([{ value: '', label: '전체' }, ...kindSelectData])
     setKind(data[0].kindCd)
+    setLoading(false)
   }
 
   const getPetList = async () => {
     const params: IPetParams = {
-      bgnde: dateToString(startDate),
-      endde: dateToString(endDate),
+      bgnde: startDate,
+      endde: endDate,
       upKind,
       kind,
       uprCd: sido,
@@ -84,8 +96,8 @@ export default function Home() {
       state: 'notice',
     }
     console.log('params', params)
-    // const list = await selectPetList(params)
-    // console.log(list.data)
+    const list = await selectPetList(params)
+    console.log(list)
   }
 
   const onClick = () => {
@@ -94,40 +106,26 @@ export default function Home() {
   }
   return (
     <>
+      <Button type='primary'></Button>
       <button onClick={() => setOpen(true)}>열기</button>
-      <Sheet
-        isOpen={open}
-        rootId='__next'
-        onClose={() => setOpen(false)}
-        // detent='content-height'
-      >
-        <Sheet.Container>
-          <Sheet.Header />
-          <button onClick={() => setOpen(false)}>
-            <CloseRoundedIcon fontSize='large' />
-          </button>
-          <Sheet.Content></Sheet.Content>
-        </Sheet.Container>
-        <Sheet.Backdrop />
-      </Sheet>
-      {/* <select onChange={(e) => getKindList(e.target.value)}>
-        {defUpKindList.map(({ label, value }, i) => {
-          return (
-            <option key={i} value={value}>
-              {label}
-            </option>
-          )
-        })}
-      </select>
-      <select onChange={(e) => setKind(e.target.value)}>
-        {kindList.map(({ knm, kindCd }, i) => {
-          return (
-            <option key={i} value={kindCd}>
-              {knm}
-            </option>
-          )
-        })}
-      </select>
+      <BottomModal show={open} onClose={() => setOpen(false)}>
+        <div></div>
+      </BottomModal>
+      <Select
+        labelInValue
+        defaultValue={{ value: '', label: '전체' }}
+        style={{ width: 120 }}
+        onChange={({ value }) => getKindList(value)}
+        options={defUpKindList}
+      />
+      <Select
+        labelInValue
+        loading={loading}
+        defaultValue={{ value: '', label: '전체' }}
+        style={{ width: 120 }}
+        onChange={({ value }) => setKind(value)}
+        options={kindList}
+      />
       <select onChange={(e) => getSigunguList(e.target.value)}>
         <option value={''}>전국</option>
         {sidoList.map(({ orgdownNm, orgCd }, i) => {
@@ -147,7 +145,19 @@ export default function Home() {
           )
         })}
       </select>
-      <CusDatePicker
+      <DatePicker
+        defaultValue={dayjs(startDate, 'YYYY-MM-DD')}
+        disabledDate={(d) => !d || d.isAfter(endDate)}
+        allowClear={false}
+        showToday={false}
+      />
+      <DatePicker
+        defaultValue={dayjs(endDate, 'YYYY-MM-DD')}
+        disabledDate={(d) => !d || d.isAfter(endDate) || d.isBefore(startDate)}
+        allowClear={false}
+        showToday={false}
+      />
+      {/* <CusDatePicker
         value={startDate}
         max={endDate}
         onChange={(date) => date && setStartDate(date)}
@@ -157,17 +167,9 @@ export default function Home() {
         min={startDate}
         max={new Date()}
         onChange={(date) => date && setEndDate(date)}
-      />
+      /> */}
       <button onClick={onClick}>조회</button>
-      <h1>main</h1> */}
-      {/* <div
-        style={{
-          height: 500,
-          width: '100%',
-          backgroundColor: 'red',
-          position: 'fixed',
-        }}
-      ></div> */}
+      <h1>main</h1>
     </>
   )
 }

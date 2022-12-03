@@ -23,7 +23,7 @@ export const dateToString = (date: Date) => {
   return result
 }
 
-export const dateFomat = (date: string) => {
+export const dateFormat = (date: string) => {
   let result = null
   const year = date.substring(0, 4)
   const month = date.substring(4, 6)
@@ -49,4 +49,14 @@ export const prevMonthYear = (month: number) => {
   var monthYear = date.getMonth()
   date.setMonth(monthYear - month)
   return date
+}
+
+export const dateFormatDash = (date: Date) => {
+  return dateFormat(dateToString(date))
+}
+
+export const prevMonthYearStr = (month: number) => {
+  const date = prevMonthYear(month)
+
+  return dateFormatDash(date)
 }

@@ -21,3 +21,8 @@ export interface IPetParams {
   page: string
   limit: string
 }
+
+export interface ISelectKindItem {
+  knm: string
+  kindCd: string
+}

@@ -2,6 +2,7 @@ import http from '@http'
 import {
   IKindParams,
   IPetParams,
+  ISelectKindItem,
   ISidoParams,
   ISigunguParams,
 } from '@interface/IPet'
@@ -37,7 +38,7 @@ export const selectKindList = async (params: IKindParams) => {
   })
   const response = await http.get(url)
   try {
-    const list = response.data.response.body.items.item || []
+    const list: ISelectKindItem[] = response.data.response.body.items.item || []
     return list
   } catch (error) {
     return []
