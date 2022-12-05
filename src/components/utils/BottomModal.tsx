@@ -1,12 +1,20 @@
 import { ReactNode } from 'react'
 import Sheet from 'react-modal-sheet'
-import CloseRoundedIcon from '@mui/icons-material/CloseRounded'
+import styled from 'styled-components'
+import { CloseOutlined } from '@ant-design/icons'
+import { Button } from 'antd'
 
 interface IBottomModalProps {
   show?: boolean
   onClose: () => void
   children: ReactNode
 }
+
+const CloseWrap = styled.div`
+  display: flex;
+  padding-right: 30px;
+  justify-content: end;
+`
 
 const BottomModal = ({
   children,
@@ -22,9 +30,14 @@ const BottomModal = ({
     >
       <Sheet.Container>
         <Sheet.Header />
-        <button onClick={onClose}>
-          <CloseRoundedIcon fontSize='large' />
-        </button>
+        <CloseWrap>
+          <Button
+            type='text'
+            size='large'
+            onClick={onClose}
+            icon={<CloseOutlined style={{ fontSize: '18px' }} />}
+          ></Button>
+        </CloseWrap>
         <Sheet.Content>{children}</Sheet.Content>
       </Sheet.Container>
       <Sheet.Backdrop />
