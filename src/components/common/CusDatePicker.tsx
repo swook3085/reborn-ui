@@ -1,25 +1,22 @@
-import DatePicker from 'react-datepicker'
-import ko from 'date-fns/locale/ko'
-import 'react-datepicker/dist/react-datepicker.css'
+import { DatePicker, DatePickerProps } from 'antd'
+import { Dayjs } from 'dayjs'
 
 interface ICusDateProps {
-  value: Date
-  min?: Date
-  max?: Date
-  onChange?: (date: Date | null) => void
+  value: Dayjs
+  disabledDate: (d: Dayjs) => boolean
+  onChange?: DatePickerProps['onChange']
 }
 
-const CusDatePicker = ({ value, min, max, onChange }: ICusDateProps) => {
+const CusDatePicker = ({ value, disabledDate, onChange }: ICusDateProps) => {
   return (
     <DatePicker
-      selected={value}
-      locale={ko}
-      dateFormat="yyyy-MM-dd"
-      className="input-datepicker"
-      closeOnScroll={true}
-      onChange={(date) => onChange && onChange(date)}
-      maxDate={max}
-      minDate={min}
+      defaultValue={value}
+      disabledDate={disabledDate}
+      allowClear={false}
+      showToday={false}
+      style={{ cursor: 'pointer' }}
+      onChange={onChange}
+      inputReadOnly
     />
   )
 }
