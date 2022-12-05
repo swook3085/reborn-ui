@@ -8,6 +8,9 @@ const nextConfig = {
   experimental: {
     forceSwcTransforms: true,
   },
+  compiler: {
+    styledComponents: true,
+  },
   webpack(config, { webpack }) {
     config.resolve = {
       alias: {
@@ -16,6 +19,9 @@ const nextConfig = {
         '@shared': path.resolve(__dirname, 'src/shared'),
         '@components': path.resolve(__dirname, 'src/components'),
         '@interpace': path.resolve(__dirname, 'src/shared/interface'),
+        '@template': path.resolve(__dirname, 'src/template'),
+        '@resource': path.resolve(__dirname, 'src/resource'),
+        '@images': path.resolve(__dirname, 'src/resource/images'),
       },
       ...config.resolve,
     }
