@@ -62,7 +62,7 @@ const KindButton = ({
       <Button onClick={() => onClick && onClick(value)}>
         <ImagWrap>
           <Image
-            src={`/images/happy${type === 'all' ? 'dog' : type}.png`}
+            src={`/reborn-ui/images/happy${type === 'all' ? 'dog' : type}.png`}
             alt={title}
             width={65}
             height={65}
