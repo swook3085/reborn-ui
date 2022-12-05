@@ -67,7 +67,13 @@ const KindContainer = () => {
       {kindList.length > 0 ? (
         <CntWrap title='품종'>
           <ScrollContainer
-            style={{ display: 'flex', paddingLeft: 20, paddingRight: 10 }}
+            style={{
+              display: 'flex',
+              paddingLeft: 20,
+              paddingRight: 10,
+              height: 60,
+              alignItems: 'center',
+            }}
           >
             {kindList.map(({ label, value }) => {
               return (
@@ -76,6 +82,7 @@ const KindContainer = () => {
                   key={value}
                   style={{ marginRight: 10 }}
                   onClick={() => onKindClick(value)}
+                  size='large'
                 >
                   {label}
                 </Button>
