@@ -6,10 +6,10 @@ import {
   selectSigunguList,
 } from '@controller/petController'
 import { IPetParams } from '@interface/IPet'
-import { dateFormatDash, prevMonthYearStr } from '@shared/utils'
-// import CusDatePicker from '@components/common/CusDatePicker'
+import { dateFormatDash, dateToString, prevMonthYearStr } from '@shared/utils'
+import CusDatePicker from '@components/common/CusDatePicker'
 import BottomModal from '@components/utils/BottomModal'
-import { Button, Select, DatePicker } from 'antd'
+import { Button, Select, DatePickerProps } from 'antd'
 import dayjs from 'dayjs'
 import 'dayjs/locale/ko'
 
@@ -85,7 +85,7 @@ export default function Home() {
 
   const getPetList = async () => {
     const params: IPetParams = {
-      bgnde: startDate,
+      bgnde: dateToString(dayjs(startDate, 'YYYYMMDD').toDate()),
       endde: endDate,
       upKind,
       kind,
@@ -103,6 +103,11 @@ export default function Home() {
   const onClick = () => {
     console.log('조회')
     getPetList()
+  }
+
+  const onChange: DatePickerProps['onChange'] = (date, dateString) => {
+    console.log(date, dateString)
+    setStartDate(dateString)
   }
 
   return (
@@ -146,21 +151,15 @@ export default function Home() {
           )
         })}
       </select>
-      <DatePicker
-        defaultValue={dayjs(startDate, 'YYYY-MM-DD')}
+      <CusDatePicker
+        value={dayjs(startDate, 'YYYY-MM-DD')}
         disabledDate={(d) => !d || d.isAfter(endDate)}
-        allowClear={false}
-        showToday={false}
-        style={{ cursor: 'pointer' }}
-        inputReadOnly
+        onChange={onChange}
       />
-      <DatePicker
-        defaultValue={dayjs(endDate, 'YYYY-MM-DD')}
+      <CusDatePicker
+        value={dayjs(endDate, 'YYYY-MM-DD')}
         disabledDate={(d) => !d || d.isAfter(endDate) || d.isBefore(startDate)}
-        allowClear={false}
-        showToday={false}
-        style={{ cursor: 'pointer' }}
-        inputReadOnly
+        onChange={onChange}
       />
       {/* <CusDatePicker
         value={startDate}
