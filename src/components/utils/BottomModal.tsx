@@ -26,6 +26,7 @@ const BottomModal = ({
       isOpen={show}
       rootId='__next'
       onClose={onClose}
+      disableDrag
       // detent='content-height'
     >
       <Sheet.Container>
