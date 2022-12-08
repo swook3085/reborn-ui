@@ -7,8 +7,9 @@ const ButtonWrap = styled.div(
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.02) 0px 2px 0px;
   border: 1px solid rgb(217, 217, 217);
-  width: 120px;
+  flex: 1;
   height: 120px;
+  margin: 0 5px;
   display: flex;
   flex-direction: column;
   border-color: ${props.selected ? '#ECB04D' : 'rgb(217, 217, 217)'};

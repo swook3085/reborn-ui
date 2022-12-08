@@ -12,7 +12,7 @@ interface IBottomModalProps {
 
 const CloseWrap = styled.div`
   display: flex;
-  padding-right: 30px;
+  padding-right: 10px;
   justify-content: end;
 `
 
@@ -26,7 +26,6 @@ const BottomModal = ({
       isOpen={show}
       rootId='__next'
       onClose={onClose}
-      disableDrag
       // detent='content-height'
     >
       <Sheet.Container>

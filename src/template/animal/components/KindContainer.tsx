@@ -9,7 +9,7 @@ import { ScrollContainer } from 'react-indiana-drag-scroll'
 import 'react-indiana-drag-scroll/dist/style.css'
 
 const KindWrap = styled.div`
-  width: 100%;
+  padding: 0 5px;
   display: flex;
   justify-content: space-around;
 `
@@ -66,29 +66,30 @@ const KindContainer = () => {
       </CntWrap>
       {kindList.length > 0 ? (
         <CntWrap title='품종'>
-          <ScrollContainer
+          <div
             style={{
               display: 'flex',
-              paddingLeft: 20,
-              paddingRight: 10,
               height: 60,
               alignItems: 'center',
+              overflow: 'auto',
+              margin: '0 5px',
             }}
           >
             {kindList.map(({ label, value }) => {
               return (
-                <Button
-                  type={value === kind ? 'primary' : 'default'}
-                  key={value}
-                  style={{ marginRight: 10 }}
-                  onClick={() => onKindClick(value)}
-                  size='large'
-                >
-                  {label}
-                </Button>
+                <div style={{ marginLeft: 5, marginRight: 5 }}>
+                  <Button
+                    type={value === kind ? 'primary' : 'default'}
+                    key={value}
+                    onClick={() => onKindClick(value)}
+                    size='large'
+                  >
+                    {label}
+                  </Button>
+                </div>
               )
             })}
-          </ScrollContainer>
+          </div>
         </CntWrap>
       ) : null}
     </>
