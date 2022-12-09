@@ -1,25 +1,22 @@
-import BottomModal from '@components/utils/BottomModal'
+import SlideOverLayer from '@components/overlays/SlideOverLayer'
 import { ReducerType } from '@modules/store/rootReducer'
-import {
-  BottomModal as BottomModalSlice,
-  onClose,
-} from '@modules/store/slices/bottomModal'
+import { onClose, SlideModal } from '@modules/store/slices/slideModal'
 import { useDispatch, useSelector } from 'react-redux'
 import CntWrap from './CntWrap'
 import KindContainer from './KindContainer'
 
 const AnimalSearchModal = () => {
-  const bottomModal = useSelector<ReducerType, BottomModalSlice>(
-    (state) => state.bottomModal,
+  const sliceModal = useSelector<ReducerType, SlideModal>(
+    (state) => state.sliceModal,
   )
   const dispatch = useDispatch()
   return (
-    <BottomModal show={bottomModal.open} onClose={() => dispatch(onClose())}>
+    <SlideOverLayer show={sliceModal.open} onClose={() => dispatch(onClose())}>
       <KindContainer />
       <CntWrap title='지역'>
         <div></div>
       </CntWrap>
-    </BottomModal>
+    </SlideOverLayer>
   )
 }
 

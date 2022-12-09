@@ -1,9 +1,9 @@
 import { combineReducers } from '@reduxjs/toolkit'
-import bottomModal from './slices/bottomModal'
+import sliceModal from './slices/slideModal'
 
 // 만들어 놓은 리듀서들을 합친다.
 const reducer = combineReducers({
-  bottomModal,
+  sliceModal,
 })
 
 // React에서 사용할 수 있도록 타입을 만들어 export 해준다.

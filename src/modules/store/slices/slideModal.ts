@@ -1,11 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-export interface BottomModal {
+export interface SlideModal {
   open: boolean
 }
 
-export const bottomModal = createSlice({
-  name: 'bottomModal',
+export const slideModal = createSlice({
+  name: 'slideModal',
   initialState: {
     open: false,
   },
@@ -19,5 +19,5 @@ export const bottomModal = createSlice({
   },
 })
 
-export const { onOpen, onClose } = bottomModal.actions
-export default bottomModal.reducer
+export const { onOpen, onClose } = slideModal.actions
+export default slideModal.reducer

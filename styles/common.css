@@ -2,6 +2,10 @@ body {
   font-family: 'Noto Sans KR', sans-serif;
 }
 
+p {
+  color: #000;
+}
+
 .react-datepicker__day-name {
   width: 28px;
 }

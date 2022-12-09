@@ -16,11 +16,11 @@ const KindWrap = styled.div`
 
 const KindContainer = () => {
   const defKindList = useRef<IKindButtonProps[]>([
-    { value: '', title: '모든 동물', type: 'all' },
+    { value: '0', title: '모든 동물', type: 'all' },
     { value: '417000', title: '강아지', type: 'dog' },
     { value: '422400', title: '고양이', type: 'cat' },
   ])
-  const [upKind, setUpKind] = useState('')
+  const [upKind, setUpKind] = useState('0')
   const [kind, setKind] = useState('')
   const [kindList, setKindList] = useState<{ value: string; label: string }[]>(
     [],
@@ -77,10 +77,9 @@ const KindContainer = () => {
           >
             {kindList.map(({ label, value }) => {
               return (
-                <div style={{ marginLeft: 5, marginRight: 5 }}>
+                <div key={value} style={{ marginLeft: 5, marginRight: 5 }}>
                   <Button
                     type={value === kind ? 'primary' : 'default'}
-                    key={value}
                     onClick={() => onKindClick(value)}
                     size='large'
                   >
