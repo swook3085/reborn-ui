@@ -8,7 +8,6 @@ import {
 import { IPetParams } from '@interface/IPet'
 import { dateFormatDash, dateToString, prevMonthYearStr } from '@shared/utils'
 import CusDatePicker from '@components/common/CusDatePicker'
-import BottomModal from '@components/utils/BottomModal'
 import { Button, Select, DatePickerProps } from 'antd'
 import dayjs from 'dayjs'
 import 'dayjs/locale/ko'
@@ -114,9 +113,6 @@ export default function Home() {
     <>
       <Button type='primary'></Button>
       <button onClick={() => setOpen(true)}>열기</button>
-      <BottomModal show={open} onClose={() => setOpen(false)}>
-        <div></div>
-      </BottomModal>
       <Select
         labelInValue
         defaultValue={{ value: '', label: '전체' }}
