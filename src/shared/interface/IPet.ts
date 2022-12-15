@@ -26,3 +26,8 @@ export interface ISelectKindItem {
   knm: string
   kindCd: string
 }
+
+export interface IRenderKindItem {
+  value: string
+  label: string
+}
