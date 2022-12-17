@@ -1,6 +1,6 @@
 import { selectKindList } from '@controller/petController'
 import { Button } from 'antd'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import CntWrap from './CntWrap'
 import KindButton, { IKindButtonProps } from './KindButton'
@@ -22,6 +22,10 @@ import {
   IRenderKindItem,
   ISelectKindItem,
 } from '@shared/interface/IPet'
+import { Swiper as Swp, SwiperSlide } from 'swiper/react'
+import type { Swiper } from 'swiper'
+import { FreeMode } from 'swiper'
+import 'swiper/swiper.min.css'
 
 const KindWrap = styled.div`
   padding: 0 5px;
@@ -30,6 +34,7 @@ const KindWrap = styled.div`
 `
 
 const KindContainer = () => {
+  const swiperRef = useRef<Swiper>()
   const defKindList = useRef<IKindButtonProps[]>([
     { value: '0', title: '모든 동물', type: 'all' },
     { value: '417000', title: '강아지', type: 'dog' },
@@ -83,10 +88,23 @@ const KindContainer = () => {
     }
     dispatch(setKindList(kindList))
     dispatch(setKind(kindList.length === 0 ? '' : kindList[0].value))
+    //* 동물 타입이 변경시 품종 초기화
+    const swiper = swiperRef.current
+    if (swiper) {
+      swiper.slideTo(0)
+    }
   }
 
-  const onKindClick = (value: string) => {
+  const onKindClick = (value: string, index: number) => {
     dispatch(setKind(value))
+    console.log(
+      'activeIndex',
+      document.getElementsByClassName('swiper-slide-active'),
+    )
+    const swiper = swiperRef.current
+    if (swiper) {
+      swiper.slideTo(index)
+    }
   }
 
   return (
@@ -109,31 +127,40 @@ const KindContainer = () => {
         <CntWrap title='품종'>
           <div
             style={{
-              // display: 'flex',
-              // height: 60,
+              display: 'flex',
               alignItems: 'center',
-              // overflow: 'auto',
+              justifyContent: 'center',
               margin: '0 5px',
             }}
           >
-            {sliceSearchFilter.kindList.map(({ label, value }) => {
-              return (
-                <div key={value} style={{ marginLeft: 5, marginRight: 5 }}>
-                  <Button
-                    type={
-                      value === sliceSearchFilter.kind ? 'primary' : 'default'
-                    }
-                    className={
-                      value === sliceSearchFilter.kind ? 'bg-[#ECB04D]' : ''
-                    }
-                    onClick={() => onKindClick(value)}
-                    size='large'
-                  >
-                    {label}
-                  </Button>
-                </div>
-              )
-            })}
+            <Swp
+              slidesPerView={'auto'}
+              spaceBetween={8}
+              initialSlide={0}
+              scrollbar={{ draggable: true }}
+              freeMode={true}
+              modules={[FreeMode]}
+              onSwiper={(swiper) => (swiperRef.current = swiper)}
+            >
+              {sliceSearchFilter.kindList.map(({ label, value }, i) => {
+                return (
+                  <SwiperSlide key={value}>
+                    <Button
+                      type={
+                        value === sliceSearchFilter.kind ? 'primary' : 'default'
+                      }
+                      className={
+                        value === sliceSearchFilter.kind ? 'bg-[#ECB04D]' : ''
+                      }
+                      onClick={() => onKindClick(value, i)}
+                      size='large'
+                    >
+                      {label}
+                    </Button>
+                  </SwiperSlide>
+                )
+              })}
+            </Swp>
           </div>
         </CntWrap>
       ) : null}

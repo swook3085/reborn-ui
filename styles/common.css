@@ -60,3 +60,6 @@ p {
 .ant-picker-input input {
   cursor: pointer;
 }
+.swiper-slide {
+  width: auto !important;
+}
