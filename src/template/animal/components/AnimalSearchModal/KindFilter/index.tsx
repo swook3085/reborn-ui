@@ -1,11 +1,9 @@
 import { selectKindList } from '@controller/petController'
-import { Button } from 'antd'
-import { useEffect, useRef, useState } from 'react'
+import { useRef } from 'react'
 import styled from 'styled-components'
-import CntWrap from './CntWrap'
+import CntWrap from '../../CntWrap'
 import KindButton, { IKindButtonProps } from './KindButton'
 import _ from 'lodash'
-import { ScrollContainer } from 'react-indiana-drag-scroll'
 import 'react-indiana-drag-scroll/dist/style.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { ReducerType } from '@modules/store/rootReducer'
@@ -17,18 +15,13 @@ import {
   setDogKindList,
   setKindList,
 } from '@modules/store/slices/searchFilter'
-import {
-  IKindParams,
-  IRenderKindItem,
-  ISelectKindItem,
-} from '@shared/interface/IPet'
-import { Swiper as Swp, SwiperSlide } from 'swiper/react'
+import { IRenderKindItem } from '@shared/interface/IPet'
 import type { Swiper } from 'swiper'
-import { FreeMode } from 'swiper'
 import 'swiper/swiper.min.css'
+import FilterSwiper from '../../FilterSwiper'
 
 const KindWrap = styled.div`
-  padding: 0 5px;
+  // padding: 0 5px;
   display: flex;
   justify-content: space-around;
 `
@@ -40,7 +33,7 @@ const KindContainer = () => {
     { value: '417000', title: '강아지', type: 'dog' },
     { value: '422400', title: '고양이', type: 'cat' },
   ])
-  const sliceSearchFilter = useSelector<ReducerType, ISearchFilter>(
+  const store = useSelector<ReducerType, ISearchFilter>(
     (state) => state.sliceSearchFilter,
   )
   const dispatch = useDispatch()
@@ -48,12 +41,12 @@ const KindContainer = () => {
   const getData = async (value: string) => {
     const defItem = { value: '', label: '전체' }
     let list: IRenderKindItem[] = []
-    if (value === '417000' && sliceSearchFilter.dogKindList.length > 0) {
-      list = sliceSearchFilter.dogKindList
+    if (value === '417000' && store.dogKindList.length > 0) {
+      list = store.dogKindList
     }
 
-    if (value === '422400' && sliceSearchFilter.catKindList.length > 0) {
-      list = sliceSearchFilter.catKindList
+    if (value === '422400' && store.catKindList.length > 0) {
+      list = store.catKindList
     }
     if (list.length > 0 || value === '0') return list
 
@@ -97,10 +90,6 @@ const KindContainer = () => {
 
   const onKindClick = (value: string, index: number) => {
     dispatch(setKind(value))
-    console.log(
-      'activeIndex',
-      document.getElementsByClassName('swiper-slide-active'),
-    )
     const swiper = swiperRef.current
     if (swiper) {
       swiper.slideTo(index)
@@ -116,52 +105,21 @@ const KindContainer = () => {
               <KindButton
                 key={props.value}
                 {...props}
-                active={sliceSearchFilter.upKind === props.value}
+                active={store.upKind === props.value}
                 onClick={onClick}
               />
             )
           })}
         </KindWrap>
       </CntWrap>
-      {sliceSearchFilter.kindList.length > 0 ? (
+      {store.kindList.length > 0 ? (
         <CntWrap title='품종'>
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              margin: '0 5px',
-            }}
-          >
-            <Swp
-              slidesPerView={'auto'}
-              spaceBetween={8}
-              initialSlide={0}
-              scrollbar={{ draggable: true }}
-              freeMode={true}
-              modules={[FreeMode]}
-              onSwiper={(swiper) => (swiperRef.current = swiper)}
-            >
-              {sliceSearchFilter.kindList.map(({ label, value }, i) => {
-                return (
-                  <SwiperSlide key={value}>
-                    <Button
-                      type={
-                        value === sliceSearchFilter.kind ? 'primary' : 'default'
-                      }
-                      className={
-                        value === sliceSearchFilter.kind ? 'bg-[#ECB04D]' : ''
-                      }
-                      onClick={() => onKindClick(value, i)}
-                      size='large'
-                    >
-                      {label}
-                    </Button>
-                  </SwiperSlide>
-                )
-              })}
-            </Swp>
-          </div>
+          <FilterSwiper
+            list={store.kindList}
+            value={store.kind}
+            onSwiper={(swiper) => (swiperRef.current = swiper)}
+            onClick={(value, i) => onKindClick(value, i)}
+          />
         </CntWrap>
       ) : null}
     </>

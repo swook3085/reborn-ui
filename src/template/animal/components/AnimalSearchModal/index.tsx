@@ -2,8 +2,8 @@ import SlideOverLayer from '@components/overlays/SlideOverLayer'
 import { ReducerType } from '@modules/store/rootReducer'
 import { onClose, SlideModal } from '@modules/store/slices/slideModal'
 import { useDispatch, useSelector } from 'react-redux'
-import CntWrap from './CntWrap'
-import KindContainer from './KindContainer'
+import KindContainer from './KindFilter'
+import SidoSigunguContainer from './SidoSigunguFilter'
 
 const AnimalSearchModal = () => {
   const sliceModal = useSelector<ReducerType, SlideModal>(
@@ -13,9 +13,7 @@ const AnimalSearchModal = () => {
   return (
     <SlideOverLayer show={sliceModal.open} onClose={() => dispatch(onClose())}>
       <KindContainer />
-      <CntWrap title='지역'>
-        <div></div>
-      </CntWrap>
+      <SidoSigunguContainer />
     </SlideOverLayer>
   )
 }

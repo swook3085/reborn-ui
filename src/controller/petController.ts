@@ -3,7 +3,9 @@ import {
   IKindParams,
   IPetParams,
   ISelectKindItem,
+  ISidoItem,
   ISidoParams,
+  ISigunguItem,
   ISigunguParams,
 } from '@interface/IPet'
 import { getServiceURL } from '@shared/utils'
@@ -12,7 +14,7 @@ export const selectSidoList = async (params: ISidoParams) => {
   const url = getServiceURL('sido', params)
   const response = await http.get(url)
   try {
-    const list = response.data.response.body.items.item || []
+    const list: ISidoItem[] = response.data.response.body.items.item || []
     return list
   } catch (error) {
     return []
@@ -24,7 +26,7 @@ export const selectSigunguList = async (params: ISigunguParams) => {
   const url = getServiceURL('sigungu', { upr_cd: uprCd })
   const response = await http.get(url)
   try {
-    const list = response.data.response.body.items.item || []
+    const list: ISigunguItem[] = response.data.response.body.items.item || []
     return list
   } catch (error) {
     return []

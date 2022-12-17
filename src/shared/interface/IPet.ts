@@ -31,3 +31,19 @@ export interface IRenderKindItem {
   value: string
   label: string
 }
+
+export interface ISwiperItem {
+  value: string
+  label: string
+}
+
+export interface ISidoItem {
+  orgdownNm: string
+  orgCd: string
+}
+
+export interface ISigunguItem extends ISidoItem {
+  orgdownNm: string
+  orgCd: string
+  uprCd: string
+}

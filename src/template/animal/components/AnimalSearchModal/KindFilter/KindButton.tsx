@@ -2,15 +2,15 @@ import Image from 'next/image'
 import styled from 'styled-components'
 
 const ButtonWrap = styled.div(
-  (props: { selected: boolean }) => `
+  (props: { selected: boolean; value: string }) => `
   background-color: #fff;
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.02) 0px 2px 0px;
   border: 1px solid rgb(217, 217, 217);
   flex: 1;
   height: 120px;
-  margin: 0 5px;
   display: flex;
+  margin: ${props.value === '417000' ? '0 10px' : '0'};
   flex-direction: column;
   border-color: ${props.selected ? '#ECB04D' : 'rgb(217, 217, 217)'};
 `,
@@ -59,7 +59,7 @@ const KindButton = ({
   value = '',
 }: IKindButtonProps) => {
   return (
-    <ButtonWrap selected={active}>
+    <ButtonWrap value={value} selected={active}>
       <Button onClick={() => onClick && onClick(value)}>
         <ImagWrap>
           <Image
