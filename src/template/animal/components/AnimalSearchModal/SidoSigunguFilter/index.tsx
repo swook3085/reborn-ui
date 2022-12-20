@@ -90,7 +90,7 @@ const SidoSigunguContainer = () => {
   }, [])
   return (
     <>
-      <CntWrap title='지역'>
+      <CntWrap>
         <FilterSwiper
           list={store.sidoList}
           value={store.sido}
@@ -99,7 +99,7 @@ const SidoSigunguContainer = () => {
         />
       </CntWrap>
       {store.sigunguList.length > 0 ? (
-        <CntWrap title='지역'>
+        <CntWrap>
           <FilterSwiper
             list={store.sigunguList}
             value={store.sigungu}
