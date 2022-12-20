@@ -17,70 +17,44 @@ const SlideOverLayer = ({
 }: ISlideOverLayerProps) => {
   return (
     <Transition.Root show={show} as={Fragment}>
-      <Dialog as='div' className='relative z-10' onClose={onClose}>
+      <Dialog as='div' className='relative z-40 lg:hidden' onClose={onClose}>
         <Transition.Child
           as={Fragment}
-          enter='ease-in-out duration-500'
+          enter='transition-opacity ease-linear duration-300'
           enterFrom='opacity-0'
           enterTo='opacity-100'
-          leave='ease-in-out duration-500'
+          leave='transition-opacity ease-linear duration-300'
           leaveFrom='opacity-100'
           leaveTo='opacity-0'
         >
-          <div className='fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity' />
+          <div className='fixed inset-0 bg-black bg-opacity-25' />
         </Transition.Child>
 
-        <div className='fixed inset-0 overflow-hidden'>
-          <div className='absolute inset-0 overflow-hidden'>
-            <div className='pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10'>
-              <Transition.Child
-                as={Fragment}
-                enter='transform transition ease-in-out duration-500 sm:duration-700'
-                enterFrom='translate-x-full'
-                enterTo='translate-x-0'
-                leave='transform transition ease-in-out duration-500 sm:duration-700'
-                leaveFrom='translate-x-0'
-                leaveTo='translate-x-full'
-              >
-                <Dialog.Panel className='pointer-events-auto relative w-screen max-w-md'>
-                  <Transition.Child
-                    as={Fragment}
-                    enter='ease-in-out duration-500'
-                    enterFrom='opacity-0'
-                    enterTo='opacity-100'
-                    leave='ease-in-out duration-500'
-                    leaveFrom='opacity-100'
-                    leaveTo='opacity-0'
-                  >
-                    <div className='absolute top-0 left-0 -ml-8 flex pt-4 pr-2 sm:-ml-10 sm:pr-4'>
-                      <button
-                        type='button'
-                        className='rounded-md text-gray-300 hover:text-white'
-                        onClick={onClose}
-                      >
-                        <span className='sr-only'>Close panel</span>
-                        <XIcon className='h-6 w-6' aria-hidden='true' />
-                      </button>
-                    </div>
-                  </Transition.Child>
-                  <div className='flex h-full flex-col overflow-y-scroll bg-white py-6 shadow-xl'>
-                    {title ? (
-                      <div className='px-4 sm:px-6'>
-                        <Dialog.Title className='text-lg font-medium text-gray-900'>
-                          Panel title
-                        </Dialog.Title>
-                      </div>
-                    ) : (
-                      <></>
-                    )}
-                    <div className='relative mt-6 flex-1 px-4 sm:px-6'>
-                      {children}
-                    </div>
-                  </div>
-                </Dialog.Panel>
-              </Transition.Child>
-            </div>
-          </div>
+        <div className='fixed inset-0 z-40 flex'>
+          <Transition.Child
+            as={Fragment}
+            enter='transition ease-in-out duration-300 transform'
+            enterFrom='translate-x-full'
+            enterTo='translate-x-0'
+            leave='transition ease-in-out duration-300 transform'
+            leaveFrom='translate-x-0'
+            leaveTo='translate-x-full'
+          >
+            <Dialog.Panel className='relative ml-auto flex h-full w-full max-w-sm flex-col overflow-y-auto bg-white py-4 pb-12 shadow-xl'>
+              <div className='flex items-center justify-between px-4'>
+                <h2 className='text-lg font-medium text-gray-900'>{title}</h2>
+                <button
+                  type='button'
+                  className='-mr-2 flex h-10 w-10 items-center justify-center rounded-md bg-white p-2 text-gray-400'
+                  onClick={onClose}
+                >
+                  <span className='sr-only'>Close menu</span>
+                  <XIcon className='h-6 w-6' aria-hidden='true' />
+                </button>
+              </div>
+              <div className='mt-4 border-t border-gray-200'>{children}</div>
+            </Dialog.Panel>
+          </Transition.Child>
         </div>
       </Dialog>
     </Transition.Root>

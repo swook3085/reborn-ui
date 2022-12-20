@@ -3,6 +3,7 @@ import type { Swiper } from 'swiper'
 import 'swiper/swiper.min.css'
 import FilterButton from './FilterButton'
 import { ISwiperItem } from '@shared/interface/IPet'
+import { Disclosure } from '@headlessui/react'
 
 interface IFilterSwiperProps {
   list: ISwiperItem[]
@@ -18,34 +19,30 @@ const FilterSwiper = ({
   ...args
 }: IFilterSwiperProps) => {
   return (
-    <div
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}
-    >
-      <ReactSwiper
-        slidesPerView={'auto'}
-        spaceBetween={8}
-        observer
-        observeParents
-        onSwiper={onSwiper}
-      >
+    <Disclosure.Panel className='pt-6'>
+      <div className='space-y-4'>
         {list.map(({ label, value }, i) => {
           return (
-            <SwiperSlide key={value}>
-              <FilterButton
-                active={value === args['value']}
-                onClick={() => onClick(value, i)}
+            <div key={value} className='flex items-center'>
+              <input
+                id={`filter-${value}-${i}`}
+                name={`${value}[]`}
+                defaultValue={value}
+                type='checkbox'
+                // defaultChecked={option.checked}
+                className='h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500'
+              />
+              <label
+                htmlFor={`filter-${value}-${i}`}
+                className='ml-3 text-sm text-gray-600'
               >
                 {label}
-              </FilterButton>
-            </SwiperSlide>
+              </label>
+            </div>
           )
         })}
-      </ReactSwiper>
-    </div>
+      </div>
+    </Disclosure.Panel>
   )
 }
 

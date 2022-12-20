@@ -13,7 +13,7 @@ const AnimalSearchModal = () => {
   return (
     <SlideOverLayer show={sliceModal.open} onClose={() => dispatch(onClose())}>
       <KindContainer />
-      <SidoSigunguContainer />
+      {/* <SidoSigunguContainer /> */}
     </SlideOverLayer>
   )
 }

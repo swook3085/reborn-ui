@@ -17,6 +17,7 @@
     "baseUrl": ".",
     "paths": {
       "@modules/*": ["src/modules/*"],
+      "@pages/*": ["src/pages/*"],
       "@controller/*": ["src/controller/*"],
       "@shared/*": ["src/shared/*"],
       "@http": ["src/modules/lib/customAxios"],

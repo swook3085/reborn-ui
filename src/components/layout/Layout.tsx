@@ -4,10 +4,12 @@ interface ILayoutProps {
 
 export default function Layout({ children }: ILayoutProps) {
   return (
-    <div className="content">
-      {/* <div className="side" /> */}
-      <div className="main">{children}</div>
-      {/* <div className="side" /> */}
+    <div className='bg-white'>
+      <div>
+        <main className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
+          {children}
+        </main>
+      </div>
     </div>
   )
 }

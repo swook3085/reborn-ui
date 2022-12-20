@@ -10,14 +10,23 @@ import '../../styles/normalize.css'
 import '../../styles/common.css'
 import '../../styles/layout.css'
 import { store } from '@modules/store/store'
-import Navbar from '@components/layout/NavBar'
+import { NextPage } from 'next'
+import { ReactElement, ReactNode } from 'react'
 
 const queryClient = new QueryClient()
 
-const App = ({ Component, pageProps }: AppProps) => {
+export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
+  layout?: (page: ReactElement) => ReactNode
+}
+
+type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout
+}
+
+const App = ({ Component, pageProps }: AppPropsWithLayout) => {
+  const getLayout = Component.layout ?? ((page) => page)
   return (
     <Provider store={store}>
-      <Navbar />
       <ConfigProvider
         theme={{
           token: {
@@ -27,7 +36,7 @@ const App = ({ Component, pageProps }: AppProps) => {
         locale={locale}
       >
         <QueryClientProvider client={queryClient}>
-          <Component {...pageProps} />
+          {getLayout(<Component {...pageProps} />)}
           <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>
       </ConfigProvider>
