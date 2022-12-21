@@ -1,5 +1,8 @@
-import { DatePicker, DatePickerProps } from 'antd'
-import { Dayjs } from 'dayjs'
+import { DatePickerProps, DatePicker } from 'antd'
+import dayjs, { Dayjs } from 'dayjs'
+import 'dayjs/locale/ko'
+
+dayjs.locale('ko')
 
 interface ICusDateProps {
   value: Dayjs
@@ -10,6 +13,7 @@ interface ICusDateProps {
 const CusDatePicker = ({ value, disabledDate, onChange }: ICusDateProps) => {
   return (
     <DatePicker
+      className='w-full h-11'
       defaultValue={value}
       disabledDate={disabledDate}
       allowClear={false}

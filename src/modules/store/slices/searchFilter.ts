@@ -1,16 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { ISwiperItem } from '@shared/interface/IPet'
+import { IFilterListItem } from '@shared/interface/IPet'
 
 export interface ISearchFilter {
   upKind: string
   kind: string
   sido: string
   sigungu: string
-  dogKindList: ISwiperItem[]
-  catKindList: ISwiperItem[]
-  kindList: ISwiperItem[]
-  sidoList: ISwiperItem[]
-  sigunguList: ISwiperItem[]
+  dogKindList: IFilterListItem[]
+  catKindList: IFilterListItem[]
+  kindList: IFilterListItem[]
+  sidoList: IFilterListItem[]
+  sigunguList: IFilterListItem[]
 }
 
 export const searchFilter = createSlice({

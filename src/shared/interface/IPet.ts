@@ -32,7 +32,7 @@ export interface IRenderKindItem {
   label: string
 }
 
-export interface ISwiperItem {
+export interface IFilterListItem {
   value: string
   label: string
 }
