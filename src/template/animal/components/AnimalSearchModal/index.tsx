@@ -17,6 +17,11 @@ const AnimalSearchModal = () => {
       <KindContainer />
       <SidoSigunguContainer />
       <DateFilter />
+      <div className='w-full rounded-md px-4 lg:px-0 py-6'>
+        <button className='inline-flex rounded-md w-full h-full items-center justify-center border border-transparent bg-[#ECB04D] px-5 py-3 text-base font-medium text-white'>
+          검색
+        </button>
+      </div>
     </SlideOverLayer>
   )
 }

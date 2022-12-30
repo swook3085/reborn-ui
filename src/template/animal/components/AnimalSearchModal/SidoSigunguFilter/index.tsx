@@ -11,7 +11,7 @@ import { IFilterListItem } from '@shared/interface/IPet'
 import { isEmpty } from 'lodash'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import FilterAccordion from '../../FilterAccordion'
+import FilterSelect from '../../FilterSelect'
 
 const SidoSigunguContainer = () => {
   const store = useSelector<ReducerType, ISearchFilter>(
@@ -24,7 +24,7 @@ const SidoSigunguContainer = () => {
     if (stSidoList.length > 0) return
     const data = await selectSidoList({ numOfRows: '20' })
     const cData: IFilterListItem[] = [
-      { value: '', label: '모든 지역' },
+      { value: '', label: '전체' },
       ...data.map((props) => {
         return {
           label: props['orgdownNm'],
@@ -37,7 +37,6 @@ const SidoSigunguContainer = () => {
   }
 
   const getSigunguList = async (uprCd: string) => {
-    dispatch(setSigungu(uprCd))
     if (isEmpty(uprCd)) {
       dispatch(setSigunguList([]))
       return
@@ -47,46 +46,48 @@ const SidoSigunguContainer = () => {
       uprCd,
     }
     const data = await selectSigunguList(params)
-    console.log(data)
-    const cData: IFilterListItem[] = data.map((props) => {
-      return {
-        label: props['orgdownNm'],
-        value: props['orgCd'],
-      }
-    })
+    const cData: IFilterListItem[] = [
+      { value: '', label: '전체' },
+      ...data.map((props) => {
+        return {
+          label: props['orgdownNm'],
+          value: props['orgCd'],
+        }
+      }),
+    ]
     console.log(cData)
     dispatch(setSigunguList(cData))
     // setSigunguList(data)
   }
 
-  const onSidoClick = (value: string, index: number) => {
+  const onSidoClick = (value: string) => {
     dispatch(setSido(value))
+    dispatch(setSigungu(''))
     getSigunguList(value)
   }
 
-  const onSigunguClick = (value: string, index: number) => {
+  const onSigunguClick = (value: string) => {
     dispatch(setSigungu(value))
   }
 
   useEffect(() => {
     getSidoList()
   }, [])
+
   return (
     <>
-      <FilterAccordion
-        title='지역'
+      <FilterSelect
+        title='시/도'
         list={store.sidoList}
         value={store.sido}
-        onChange={(value, i) => onSidoClick(value, i)}
+        onChange={(value) => onSidoClick(value)}
       />
-      {store.sigunguList.length > 0 ? (
-        <FilterAccordion
-          title='시군구'
-          list={store.sigunguList}
-          value={store.sigungu}
-          onChange={(value, i) => onSigunguClick(value, i)}
-        />
-      ) : null}
+      <FilterSelect
+        title='시/군/구'
+        list={store.sigunguList}
+        value={store.sigungu}
+        onChange={(value) => onSigunguClick(value)}
+      />
     </>
   )
 }

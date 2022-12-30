@@ -60,3 +60,7 @@ export const prevMonthYearStr = (month: number) => {
 
   return dateFormatDash(date)
 }
+
+export const classNames = (...classes: string[]) => {
+  return classes.filter(Boolean).join(' ')
+}

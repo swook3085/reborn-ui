@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { IFilterListItem } from '@shared/interface/IPet'
+import { dateFormatDash, prevMonthYearStr } from '@shared/utils'
 
 export interface ISearchFilter {
   upKind: string
@@ -11,6 +12,8 @@ export interface ISearchFilter {
   kindList: IFilterListItem[]
   sidoList: IFilterListItem[]
   sigunguList: IFilterListItem[]
+  startDate: string
+  endDate: string
 }
 
 export const searchFilter = createSlice({
@@ -20,11 +23,13 @@ export const searchFilter = createSlice({
     kind: '',
     sido: '',
     sigungu: '',
-    kindList: [],
+    kindList: [{ value: '', label: '전체' }],
     dogKindList: [],
     catKindList: [],
-    sidoList: [],
-    sigunguList: [],
+    sidoList: [{ value: '', label: '전체' }],
+    sigunguList: [{ value: '', label: '전체' }],
+    startDate: prevMonthYearStr(3),
+    endDate: dateFormatDash(new Date()),
   },
   reducers: {
     setKind: (state, action) => {
@@ -54,6 +59,12 @@ export const searchFilter = createSlice({
     setSigunguList: (state, action) => {
       state.sigunguList = action.payload
     },
+    setStartDate: (state, action) => {
+      state.startDate = action.payload
+    },
+    setEndDate: (state, action) => {
+      state.endDate = action.payload
+    },
   },
 })
 
@@ -67,5 +78,7 @@ export const {
   setKindList,
   setSidoList,
   setSigunguList,
+  setStartDate,
+  setEndDate,
 } = searchFilter.actions
 export default searchFilter.reducer

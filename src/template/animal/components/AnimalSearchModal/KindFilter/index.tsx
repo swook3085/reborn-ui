@@ -17,6 +17,7 @@ import {
 } from '@modules/store/slices/searchFilter'
 import { IRenderKindItem } from '@shared/interface/IPet'
 import FilterAccordion from '../../FilterAccordion'
+import FilterSelect from '../../FilterSelect'
 
 const KindWrap = styled.div`
   // padding: 0 5px;
@@ -45,7 +46,12 @@ const KindContainer = () => {
     if (value === '422400' && store.catKindList.length > 0) {
       list = store.catKindList
     }
-    if (list.length > 0 || value === '0') return list
+
+    if (value === '0') {
+      list = [defItem]
+    }
+
+    if (list.length > 0) return list
 
     const params = {
       upKindCd: value,
@@ -100,14 +106,12 @@ const KindContainer = () => {
           })}
         </KindWrap>
       </CntWrap>
-      {store.kindList.length > 0 ? (
-        <FilterAccordion
-          title='품종'
-          list={store.kindList}
-          value={store.kind}
-          onChange={(value, _i) => onKindClick(value)}
-        />
-      ) : null}
+      <FilterSelect
+        title='품종'
+        list={store.kindList}
+        value={store.kind}
+        onChange={(value) => onKindClick(value)}
+      />
     </>
   )
 }
