@@ -34,6 +34,17 @@ export const dateFormat = (date: string) => {
   return result
 }
 
+export const dateFormatYYYYMMDD = (date: string) => {
+  let result = null
+  const year = date.substring(0, 4)
+  const month = date.substring(5, 7)
+  const day = date.substring(8, 10)
+
+  result = `${year}${month}${day}`
+
+  return result
+}
+
 function leadingZeros(n: number | string, digits: number) {
   let zero = ''
   n = n.toString()

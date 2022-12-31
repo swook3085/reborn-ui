@@ -11,17 +11,18 @@ import { IFilterListItem } from '@shared/interface/IPet'
 import { isEmpty } from 'lodash'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import FilterSelect from '../../FilterSelect'
+import FilterSelect from '../FilterSelect'
 
 const SidoSigunguContainer = () => {
-  const store = useSelector<ReducerType, ISearchFilter>(
-    (state) => state.sliceSearchFilter,
-  )
+  const { sidoList, sigunguList, _sido, _sigungu } = useSelector<
+    ReducerType,
+    ISearchFilter
+  >((state) => state.sliceSearchFilter)
   const dispatch = useDispatch()
 
   const getSidoList = async () => {
-    const stSidoList = store.sidoList
-    if (stSidoList.length > 0) return
+    const stSidoList = sidoList
+    if (stSidoList.length > 1) return
     const data = await selectSidoList({ numOfRows: '20' })
     const cData: IFilterListItem[] = [
       { value: '', label: '전체' },
@@ -33,12 +34,11 @@ const SidoSigunguContainer = () => {
       }),
     ]
     dispatch(setSidoList(cData))
-    // getSigunguList(data[0].orgCd)
   }
 
   const getSigunguList = async (uprCd: string) => {
     if (isEmpty(uprCd)) {
-      dispatch(setSigunguList([]))
+      dispatch(setSigunguList([{ value: '', label: '전체' }]))
       return
     }
 
@@ -57,7 +57,6 @@ const SidoSigunguContainer = () => {
     ]
     console.log(cData)
     dispatch(setSigunguList(cData))
-    // setSigunguList(data)
   }
 
   const onSidoClick = (value: string) => {
@@ -78,14 +77,14 @@ const SidoSigunguContainer = () => {
     <>
       <FilterSelect
         title='시/도'
-        list={store.sidoList}
-        value={store.sido}
+        list={sidoList}
+        value={_sido}
         onChange={(value) => onSidoClick(value)}
       />
       <FilterSelect
         title='시/군/구'
-        list={store.sigunguList}
-        value={store.sigungu}
+        list={sigunguList}
+        value={_sigungu}
         onChange={(value) => onSigunguClick(value)}
       />
     </>

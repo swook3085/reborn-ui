@@ -12,7 +12,7 @@ import {
 } from '@modules/store/slices/searchFilter'
 
 const DateFilter = () => {
-  const { startDate, endDate } = useSelector<ReducerType, ISearchFilter>(
+  const { _startDate, _endDate } = useSelector<ReducerType, ISearchFilter>(
     (state) => state.sliceSearchFilter,
   )
   const dispatch = useDispatch()
@@ -29,14 +29,14 @@ const DateFilter = () => {
   }
 
   return (
-    <div className='border-t border-gray-200 px-4 lg:px-0 py-6 grid-cols-9 grid'>
+    <div className='border-t border-gray-200 px-4 lg:px-0 py-4 grid-cols-9 grid'>
       <div className='col-start-1 col-end-5'>
         <label className='block text-sm mb-2 font-medium text-gray-700'>
           시작일
         </label>
         <CusDatePicker
-          value={dayjs(startDate, 'YYYY-MM-DD')}
-          disabledDate={(d) => !d || d.isAfter(endDate)}
+          value={dayjs(_startDate, 'YYYY-MM-DD')}
+          disabledDate={(d) => !d || d.isAfter(_endDate)}
           onChange={onStartDateChange}
         />
       </div>
@@ -51,9 +51,9 @@ const DateFilter = () => {
           종료일
         </label>
         <CusDatePicker
-          value={dayjs(endDate, 'YYYY-MM-DD')}
+          value={dayjs(_endDate, 'YYYY-MM-DD')}
           disabledDate={(d) =>
-            !d || d.isAfter(today.current) || d.isBefore(startDate)
+            !d || d.isAfter(today.current) || d.isBefore(_startDate)
           }
           onChange={onEndDateChange}
         />

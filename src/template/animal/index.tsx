@@ -3,9 +3,8 @@ import AnimalSearchModal from './components/AnimalSearchModal'
 import Navbar from '@components/layout/NavBar'
 import type { NextPageWithLayout } from '@pages/_app'
 import { ReactElement } from 'react'
-import KindContainer from './components/AnimalSearchModal/KindFilter'
-import SidoSigunguContainer from './components/AnimalSearchModal/SidoSigunguFilter'
-import DateFilter from './components/AnimalSearchModal/DateFilter'
+import AnimalList from './components/AnimalList'
+import FilterContainer from './components/FilterContainer'
 
 const AnimalMain: NextPageWithLayout = () => {
   return (
@@ -19,15 +18,15 @@ const AnimalMain: NextPageWithLayout = () => {
           {/* Filters */}
           <div className='hidden lg:block'>
             <h3 className='sr-only'>Categories</h3>
-            <KindContainer />
-            <SidoSigunguContainer />
-            <DateFilter />
+            <FilterContainer />
           </div>
 
           {/* Product grid */}
           <div className='lg:col-span-2'>
             {/* Replace with your content */}
-            <div className='h-96 rounded-lg border-4 border-dashed border-gray-200 lg:h-full' />
+            <div className='lg:h-full'>
+              <AnimalList />
+            </div>
             {/* /End replace */}
           </div>
         </div>
@@ -38,14 +37,7 @@ const AnimalMain: NextPageWithLayout = () => {
 }
 
 AnimalMain.layout = (page: ReactElement) => {
-  return (
-    <Layout>
-      <>
-        <Navbar />
-        {page}
-      </>
-    </Layout>
-  )
+  return <Layout>{page}</Layout>
 }
 
 export default AnimalMain

@@ -64,7 +64,7 @@ const FilterSelect = ({ title, value, list, onChange }: IFilterSelectProps) => {
                       className={({ active }) =>
                         classNames(
                           active ? 'text-white bg-[#ECB04D]' : 'text-gray-900',
-                          'relative cursor-default select-none py-2 pl-3 pr-9',
+                          'relative cursor-default select-none py-2 pl-3 pr-9 rounded-md',
                         )
                       }
                       value={item}

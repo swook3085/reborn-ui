@@ -12,8 +12,17 @@ import '../../styles/layout.css'
 import { store } from '@modules/store/store'
 import { NextPage } from 'next'
 import { ReactElement, ReactNode } from 'react'
+import Navbar from '@components/layout/NavBar'
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      refetchOnMount: false,
+      staleTime: 6 * 10 * 1000,
+    },
+  },
+})
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   layout?: (page: ReactElement) => ReactNode
@@ -36,6 +45,7 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
         locale={locale}
       >
         <QueryClientProvider client={queryClient}>
+          <Navbar />
           {getLayout(<Component {...pageProps} />)}
           <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>

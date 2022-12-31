@@ -63,3 +63,6 @@ p {
 .swiper-slide {
   width: auto !important;
 }
+.outline-none {
+  outline: 0;
+}

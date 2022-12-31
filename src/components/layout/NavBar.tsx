@@ -7,7 +7,7 @@ const Navbar = () => {
   const dispatch = useDispatch()
 
   return (
-    <div className='flex items-baseline justify-between border-b border-gray-200 pt-6 pb-2'>
+    <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex top-0 z-50 shadow-sm lg:shadow-none bg-white items-baseline sticky justify-between border-b border-gray-200 pt-6 pb-2'>
       <h1 className='text-4xl font-bold tracking-tight text-gray-900'>
         Reborn
       </h1>

@@ -1,5 +1,6 @@
 import http from '@http'
 import {
+  IAnimalListResponse,
   IKindParams,
   IPetParams,
   ISelectKindItem,
@@ -47,7 +48,9 @@ export const selectKindList = async (params: IKindParams) => {
   }
 }
 
-export const selectPetList = async (params: IPetParams) => {
+export const selectPetList = async (
+  params: IPetParams,
+): Promise<IAnimalListResponse> => {
   const upKind = params.upKind // 축종코드
   const kind = params.kind // 품종코드
   const uprCd = params.uprCd // 시도코드
@@ -74,8 +77,11 @@ export const selectPetList = async (params: IPetParams) => {
   const response = await http.get(url)
   try {
     const list = response.data.response.body.items.item || []
-    return list
+    const page = response.data.response.body.pageNo || 0
+    const total = response.data.response.body.totalCount || 0
+
+    return { list, page, total }
   } catch (error) {
-    return []
+    return { list: [], page: 0, total: 0 }
   }
 }

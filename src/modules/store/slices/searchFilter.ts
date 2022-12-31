@@ -14,12 +14,18 @@ export interface ISearchFilter {
   sigunguList: IFilterListItem[]
   startDate: string
   endDate: string
+  _upKind: string
+  _kind: string
+  _sido: string
+  _sigungu: string
+  _startDate: string
+  _endDate: string
 }
 
 export const searchFilter = createSlice({
   name: 'searchFilter',
   initialState: {
-    upKind: '0',
+    upKind: '',
     kind: '',
     sido: '',
     sigungu: '',
@@ -30,19 +36,25 @@ export const searchFilter = createSlice({
     sigunguList: [{ value: '', label: '전체' }],
     startDate: prevMonthYearStr(3),
     endDate: dateFormatDash(new Date()),
+    _upKind: '',
+    _kind: '',
+    _sido: '',
+    _sigungu: '',
+    _startDate: prevMonthYearStr(3),
+    _endDate: dateFormatDash(new Date()),
   },
   reducers: {
     setKind: (state, action) => {
-      state.kind = action.payload
+      state._kind = action.payload
     },
     setUpKind: (state, action) => {
-      state.upKind = action.payload
+      state._upKind = action.payload
     },
     setSido: (state, action) => {
-      state.sido = action.payload
+      state._sido = action.payload
     },
     setSigungu: (state, action) => {
-      state.sigungu = action.payload
+      state._sigungu = action.payload
     },
     setKindList: (state, action) => {
       state.kindList = action.payload
@@ -60,10 +72,18 @@ export const searchFilter = createSlice({
       state.sigunguList = action.payload
     },
     setStartDate: (state, action) => {
-      state.startDate = action.payload
+      state._startDate = action.payload
     },
     setEndDate: (state, action) => {
-      state.endDate = action.payload
+      state._endDate = action.payload
+    },
+    setData: (state, action) => {
+      state['sido'] = action.payload.sido
+      state['sigungu'] = action.payload.sigungu
+      state['kind'] = action.payload.kind
+      state['upKind'] = action.payload.upKind
+      state['startDate'] = action.payload.startDate
+      state['endDate'] = action.payload.endDate
     },
   },
 })
@@ -80,5 +100,6 @@ export const {
   setSigunguList,
   setStartDate,
   setEndDate,
+  setData,
 } = searchFilter.actions
 export default searchFilter.reducer

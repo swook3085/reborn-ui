@@ -17,7 +17,7 @@ const SlideOverLayer = ({
 }: ISlideOverLayerProps) => {
   return (
     <Transition.Root show={show} as={Fragment}>
-      <Dialog as='div' className='relative z-40 lg:hidden' onClose={onClose}>
+      <Dialog as='div' className='relative z-50 lg:hidden' onClose={onClose}>
         <Transition.Child
           as={Fragment}
           enter='transition-opacity ease-linear duration-300'
@@ -30,7 +30,7 @@ const SlideOverLayer = ({
           <div className='fixed inset-0 bg-black bg-opacity-25' />
         </Transition.Child>
 
-        <div className='fixed inset-0 z-40 flex'>
+        <div className='fixed inset-0 z-50 flex'>
           <Transition.Child
             as={Fragment}
             enter='transition ease-in-out duration-300 transform'
